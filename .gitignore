@@ -4,6 +4,6 @@ cached_results/
 venv/
 modified_binaries/
 old_results/
-tests/*
-!tests/Makefile
-!tests/*.c
+/Binalyzer/tests/*
+\!/Binalyzer/tests/Makefile
+!/Binalyzer/tests/*.c

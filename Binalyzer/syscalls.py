@@ -159,7 +159,7 @@ def init(fname):
 
 
 def get_syscalls(fname):
-    # find syscalls # nice comment
+    # find syscalls
     try:
         insn = init(fname)
         return find_syscalls(insn)
