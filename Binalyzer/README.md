@@ -10,3 +10,9 @@ $ python3.8 -m ensurepip --upgrade
 $ python3.8 -m pip install -r requirements.txt
 ```
 
+Afterwards, run the script with any program in your filesystem:
+
+```bash
+$ python3.8 filter.py tests/simple
+$ python3.8 filter.py /bin/ls
+```
