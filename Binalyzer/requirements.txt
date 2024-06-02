@@ -1,4 +1,6 @@
-pyelftools
-capstone
-lief
-angr
+pyelftools==0.27
+capstone==4.0.2
+lief==0.10.1
+angr==9.0.4378
+six==1.15.0
+protobuf==3.13.0

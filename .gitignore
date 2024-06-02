@@ -1,0 +1,6 @@
+__pycache__/
+.vscode/
+cached_results/
+venv/
+modified_binaries/
+old_results/
