@@ -71,6 +71,8 @@ def ldpaths(ld_so_conf='/etc/ld.so.conf'):
     for c in include_files:
         paths = paths + ldpaths(os.path.realpath(c))
 
+    # add the default lib directory as the previous code does not seem to include it
+    paths.append("/lib")
     paths = list(set(paths))
     paths.sort()
     return paths
@@ -109,7 +111,7 @@ def dynamic_dt_needed_paths( dt_needed, eclass, paths):
     return dt_needed_paths
 
 
-def all_dynamic_dt_needed_paths(f, paths):
+def all_dynamic_dt_needed_paths(f, paths, depth = 0):
     """ Return a dictionary of all the DT_NEEDED => Library Paths for
         a given ELF file obtained by recursively following linkage.
     """
@@ -120,8 +122,11 @@ def all_dynamic_dt_needed_paths(f, paths):
             # This needs to be iterated until we traverse the entire linkage tree
             dt_needed = readelf.dynamic_dt_needed()
             dt_needed_paths = dynamic_dt_needed_paths(dt_needed, eclass, paths)
+            # max depth to prevent infinite loops
+            if depth > 10: # random max number, increasing to 30 does not seem to make a difference...
+                return dt_needed_paths
             for n, lib in dt_needed_paths.items():
-                dt_needed_paths = dict(all_dynamic_dt_needed_paths(lib, paths), **dt_needed_paths)
+                dt_needed_paths = dict(all_dynamic_dt_needed_paths(lib, paths, depth + 1), **dt_needed_paths)
         except ELFError as ex:
             sys.stderr.write('ELF error: %s\n' % ex)
             sys.exit(1)

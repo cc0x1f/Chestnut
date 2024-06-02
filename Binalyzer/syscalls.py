@@ -141,6 +141,8 @@ def init(fname):
     with open(fname, 'rb') as f:
         elf = ELFFile(f)
         code = elf.get_section_by_name('.text')
+        if code is None: # what
+            return []
         ops = code.data()
         addr = code['sh_addr']
         md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
